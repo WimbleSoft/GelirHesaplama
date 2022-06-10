@@ -48,6 +48,7 @@ while (Console.ReadLine() == "E");
 static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, double aylikGider, double yillikEkGelir, double yillikEkGider, bool gercekKisiMi)
 {
 	double gelirVergiOranı = gercekKisiMi ? 0 : 0.25;
+	double yillikFaturaTutari = aylikFaturaTutari * 12;
 
 	double aylikKdv = aylikFaturaTutari * 0.18;
 	double yillikKdv = aylikKdv * 12;
@@ -60,10 +61,13 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 	double aylikGelir = aylikCiro - aylikKdv;
 	double yillikGelir = yillikCiro - yillikKdv;
 
-	double aylikToplamGelir = aylikGelir - aylikGider + yillikEkGelir / 12;
-	double yillikToplamGelir = yillikGelir - yillikGider + yillikEkGelir;
+	double aylikEkGelir = yillikEkGelir / 12;
+	double aylikEkGider = yillikEkGider / 12;
 
-	double aylikToplamGider = aylikGider + yillikEkGider / 12;
+	double aylikToplamGelir = aylikGelir + aylikEkGelir;
+	double yillikToplamGelir = yillikGelir + yillikEkGelir;
+
+	double aylikToplamGider = aylikGider + aylikEkGider;
 	double yillikToplamGider = yillikGider + yillikEkGider;
 
 	double aylikNetGelir = aylikToplamGelir - aylikToplamGider;
@@ -77,11 +81,14 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 
 	return new Dictionary<string, string>
 	{
-		{ "Aylık Ciro                   ", $"{aylikCiro :C2}"},
-		{ "Yıllık Ciro                  ", $"{yillikCiro :C2}"},
+		{ "Aylık Fatura Tutarı          ", $"{aylikFaturaTutari :C2}"},
+		{ "Yıllık Fatura Tutarı         ", $"{yillikFaturaTutari :C2}"},
 
 		{ "Aylık Katma Değer Vergisi    ", $"{aylikKdv :C2}"},
 		{ "Yıllık Katma Değer Vergisi   ", $"{yillikKdv :C2}"},
+
+		{ "Aylık Ciro                   ", $"{aylikCiro :C2}"},
+		{ "Yıllık Ciro                  ", $"{yillikCiro :C2}"},
 
 		{ "Aylık Gelir                  ", $"{aylikGelir :C2}"},
 		{ "Yıllık Gelir                 ", $"{yillikGelir :C2}"},
@@ -89,7 +96,10 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 		{ "Aylık Gider                  ", $"{aylikGider :C2}"},
 		{ "Yıllık Gider                 ", $"{yillikGider :C2}"},
 
+		{ "Aylık Ek Gelir               ", $"{aylikEkGelir :C2}"},
 		{ "Yıllık Ek Gelir              ", $"{yillikEkGelir :C2}"},
+
+		{ "Aylık Ek Gider               ", $"{aylikEkGider :C2}"},
 		{ "Yıllık Ek Gider              ", $"{yillikEkGider :C2}"},
 
 		{ "Aylık Toplam Gelir           ", $"{aylikToplamGelir :C2}"},
