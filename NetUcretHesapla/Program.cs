@@ -1,8 +1,10 @@
 ﻿do
 {
 	double aylikFaturaTutari, aylikGider, yillikEkGelir, yillikEkGider;
-	bool gercekKisiMi;
+	bool gercekKisiMi = false;
+	bool gencGirisimciMi = false;
 	string? gercekKisi = string.Empty;
+	string? gencGirisimci = string.Empty;
 
 	Console.Clear();
 	Console.InputEncoding = System.Text.Encoding.UTF8;
@@ -24,11 +26,19 @@
 		else
 			Console.WriteLine("Yanlış seçim yaptınız.");
 	}
+	gercekKisiMi = gercekKisi == "E";
+	while (gercekKisiMi)
+	{
+		Console.Write("Genç Girişimci mi? (E/H):");
+		gencGirisimci = Console.ReadLine();
+		if (gencGirisimci == "E" || gencGirisimci == "H")
+			break;
+		else
+			Console.WriteLine("Yanlış seçim yaptınız.");
+	}
+	gencGirisimciMi = gencGirisimci == "E";
 	
-		
-	gercekKisiMi = gercekKisi == "E" ? true : false;
-	
-	Dictionary<string, string> hesaplar = NetUcretHesapla(aylikFaturaTutari, aylikGider, yillikEkGelir, yillikEkGider, gercekKisiMi);
+	Dictionary<string, string> hesaplar = NetUcretHesapla(aylikFaturaTutari, aylikGider, yillikEkGelir, yillikEkGider, gercekKisiMi, gencGirisimciMi);
 
 	int i = 0;
 	hesaplar.ToList().ForEach(x =>
@@ -45,8 +55,9 @@
 while (Console.ReadLine() == "E");
 
 
-static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, double aylikGider, double yillikEkGelir, double yillikEkGider, bool gercekKisiMi)
+static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, double aylikGider, double yillikEkGelir, double yillikEkGider, bool gercekKisiMi, bool gencGirisimciMi)
 {
+	double istisnaiGelir = gencGirisimciMi ? 75000 : 0;
 	double gelirVergiOranı = gercekKisiMi ? 0 : 0.25;
 	double yillikFaturaTutari = aylikFaturaTutari * 12;
 
@@ -73,7 +84,7 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 	double aylikNetGelir = aylikToplamGelir - aylikToplamGider;
 	double yillikNetGelir = yillikToplamGelir - yillikToplamGider;
 
-	double yillikGelirVergisi = gercekKisiMi ? CalcYGV(yillikNetGelir, ref gelirVergiOranı) : (yillikNetGelir) * 0.25;
+	double yillikGelirVergisi = gercekKisiMi ? CalcYGV(yillikNetGelir - istisnaiGelir, ref gelirVergiOranı) : (yillikNetGelir) * 0.25;
 	double aylikGelirVergisi = yillikGelirVergisi / 12;
 
 	double yillikNetUcret = yillikNetGelir - yillikGelirVergisi;
@@ -111,13 +122,15 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 		{ "Aylık Net Gelir              ", $"{aylikNetGelir :C2}"},
 		{ "Yıllık Net Gelir             ", $"{yillikNetGelir :C2}"},
 
+		{ "Gelir Verigisi Oranı         ", $"%{gelirVergiOranı*100}"},
+		{ "İstisnai Gelir               ", $"{istisnaiGelir :C2}"},
+
 		{ "Aylık Gelir Vergisi          ", $"{aylikGelirVergisi :C2}"},
 		{ "Yıllık Gelir Vergisi         ", $"{yillikGelirVergisi :C2}"},
 
 		{ "Aylık Net Ücret              ", $"{aylikNetUcret :C2}"},
 		{ "Yıllık Net Ücret             ", $"{yillikNetUcret :C2}"},
 
-		{ "Gelir Verigisi Oranı         ", $"%{gelirVergiOranı*100}"},
 	};
 }
 
