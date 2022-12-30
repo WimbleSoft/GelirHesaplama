@@ -21,22 +21,22 @@
 	{
 		Console.Write("Gerçek Kişi Firması mı? (E/H):");
 		gercekKisi = Console.ReadLine();
-		if (gercekKisi == "E" || gercekKisi == "H")
+		if (gercekKisi == "E" || gercekKisi == "H" || gercekKisi == "e" || gercekKisi == "h")
 			break;
 		else
 			Console.WriteLine("Yanlış seçim yaptınız.");
 	}
-	gercekKisiMi = gercekKisi == "E";
+	gercekKisiMi = gercekKisi == "E" || gercekKisi == "e";
 	while (gercekKisiMi)
 	{
 		Console.Write("Genç Girişimci mi? (E/H):");
 		gencGirisimci = Console.ReadLine();
-		if (gencGirisimci == "E" || gencGirisimci == "H")
+		if (gercekKisi == "E" || gercekKisi == "H" || gercekKisi == "e" || gercekKisi == "h")
 			break;
 		else
 			Console.WriteLine("Yanlış seçim yaptınız.");
 	}
-	gencGirisimciMi = gencGirisimci == "E";
+	gencGirisimciMi = gencGirisimci == "E" || gercekKisi == "e";
 	
 	Dictionary<string, string> hesaplar = NetUcretHesapla(aylikFaturaTutari, aylikGider, yillikEkGelir, yillikEkGider, gercekKisiMi, gencGirisimciMi);
 
