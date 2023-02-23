@@ -139,50 +139,53 @@ static double CalcYGV(double yıllikGelir, ref double gelirVergiOranı)
 	bool ucretGeliriMi = true;
 	double vergiMiktari = 0;
 
-	if (yıllikGelir <= 32000)
+	if (yıllikGelir <= 70000)
 	{
 		gelirVergiOranı = 0.15;
 		vergiMiktari = yıllikGelir * gelirVergiOranı;
 	}
-	else if (yıllikGelir <= 70000)
+	else if (yıllikGelir <= 150000)
 	{
 		gelirVergiOranı = 0.20;
-		vergiMiktari = (yıllikGelir - 32000) * gelirVergiOranı + 4800;
+		vergiMiktari = (yıllikGelir - 70000) * gelirVergiOranı + 10500;
 	}
-	else if (yıllikGelir <= 170000 && !ucretGeliriMi)
+
+	else if (yıllikGelir <= 370000 && !ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.27;
-		vergiMiktari = (yıllikGelir - 70000) * gelirVergiOranı + 12400;
+		vergiMiktari = (yıllikGelir - 150000) * gelirVergiOranı + 26500;
 	}
-	else if (yıllikGelir <= 250000 && ucretGeliriMi)
+	else if (yıllikGelir <= 550000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.27;
-		vergiMiktari = (yıllikGelir - 70000) * gelirVergiOranı + 12400;
-	}
-	else if (yıllikGelir <= 250000 && ucretGeliriMi)
-	{
-		gelirVergiOranı = 0.27;
-		vergiMiktari = (yıllikGelir - 70000) * gelirVergiOranı + 12400;
-	}
-	else if (yıllikGelir <= 880000 && !ucretGeliriMi)
+		vergiMiktari = (yıllikGelir - 150000) * gelirVergiOranı + 26500;
+    }
+
+    else if (yıllikGelir <= 1900000 && !ucretGeliriMi)
+    {
+        gelirVergiOranı = 0.35;
+        vergiMiktari = (yıllikGelir - 550000) * gelirVergiOranı + 85900;
+    }
+    else if (yıllikGelir <= 1900000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.35;
-		vergiMiktari = (yıllikGelir - 170000) * gelirVergiOranı + 39400;
+		vergiMiktari = (yıllikGelir - 550000) * gelirVergiOranı + 134500;
 	}
-	else if (yıllikGelir <= 880000 && ucretGeliriMi)
-	{
-		gelirVergiOranı = 0.35;
-		vergiMiktari = (yıllikGelir - 250000) * gelirVergiOranı + 61000;
-	}
-	else if (yıllikGelir > 880000 && !ucretGeliriMi)
+
+	else if (yıllikGelir > 1900000 && !ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.40;
-		vergiMiktari = (yıllikGelir - 880000) * gelirVergiOranı + 287900;
+		vergiMiktari = (yıllikGelir - 1900000) * gelirVergiOranı + 621400;
 	}
-	else if (yıllikGelir > 880000 && ucretGeliriMi)
+	else if (yıllikGelir > 1900000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.40;
-		vergiMiktari = (yıllikGelir - 880000) * gelirVergiOranı + 281500;
+		vergiMiktari = (yıllikGelir - 1900000) * gelirVergiOranı + 607000;
+	}
+	else
+	{
+		gelirVergiOranı = 0;
+        vergiMiktari = -1;
 	}
 
 	return vergiMiktari;
