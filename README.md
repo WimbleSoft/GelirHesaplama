@@ -1,7 +1,7 @@
 # Gelir Hesaplama Uygulaması
 Aylık sabit fatura kesen, aylık sabit gideri olan işletmeler için hazırlanmış basit gelir hesaplama uygulaması.
 
-Gelir vergisi hesaplama 2022 yılı için geçerli olup, ilerleyen süreçlerde değişim gösterebilir.
+Gelir vergisi hesaplama 2023 yılı için geçerli olup, ilerleyen süreçlerde değişim gösterebilir.
 
 (Gerçek Kişi Firması) ve (Limited veya Anonim Şirketleri) için gelir hesaplama yapılabilir.
 
