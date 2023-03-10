@@ -52,7 +52,7 @@
 	Console.WriteLine();
 	Console.WriteLine("Tekrar girmek ister misiniz? (E/H):");
 }
-while (Console.ReadLine() == "E");
+while (Console.ReadLine() == "E" || Console.ReadLine() == "e");
 
 
 static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, double aylikGider, double yillikEkGelir, double yillikEkGider, bool gercekKisiMi, bool gencGirisimciMi)
