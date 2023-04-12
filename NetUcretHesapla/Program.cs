@@ -84,7 +84,7 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 	double aylikNetGelir = aylikToplamGelir - aylikToplamGider;
 	double yillikNetGelir = yillikToplamGelir - yillikToplamGider;
 
-	double yillikGelirVergisi = gercekKisiMi ? CalcYGV(yillikNetGelir - istisnaiGelir, ref gelirVergiOranı) : (yillikNetGelir) * 0.25;
+	double yillikGelirVergisi = gercekKisiMi ? CalcYGV(yillikNetGelir - istisnaiGelir, ref gelirVergiOranı) : (yillikNetGelir) * 0.20;
 	double aylikGelirVergisi = yillikGelirVergisi / 12;
 
 	double yillikNetUcret = yillikNetGelir - yillikGelirVergisi;
