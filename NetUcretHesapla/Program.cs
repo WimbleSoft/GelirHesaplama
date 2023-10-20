@@ -61,7 +61,7 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 	double gelirVergiOranı = gercekKisiMi ? 0 : 0.25;
 	double yillikFaturaTutari = aylikFaturaTutari * 12;
 
-	double aylikKdv = aylikFaturaTutari * 0.18;
+	double aylikKdv = aylikFaturaTutari * 0.20;
 	double yillikKdv = aylikKdv * 12;
 
 	double aylikCiro = aylikFaturaTutari + aylikKdv;
@@ -84,7 +84,7 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 	double aylikNetGelir = aylikToplamGelir - aylikToplamGider;
 	double yillikNetGelir = yillikToplamGelir - yillikToplamGider;
 
-	double yillikGelirVergisi = gercekKisiMi ? CalcYGV(yillikNetGelir - istisnaiGelir, ref gelirVergiOranı) : (yillikNetGelir) * 0.20;
+	double yillikGelirVergisi = gercekKisiMi ? CalcYGV(yillikNetGelir - istisnaiGelir, ref gelirVergiOranı) : (yillikNetGelir) * 0.25;
 	double aylikGelirVergisi = yillikGelirVergisi / 12;
 
 	double yillikNetUcret = yillikNetGelir - yillikGelirVergisi;
@@ -92,43 +92,43 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 
 	return new Dictionary<string, string>
 	{
-		{ "Aylık Fatura Tutarı          ", $"{aylikFaturaTutari :C2}"},
+		{ "Aylık Ortalama Fatura Tutarı ", $"{aylikFaturaTutari :C2}"},
 		{ "Yıllık Fatura Tutarı         ", $"{yillikFaturaTutari :C2}"},
 
 		{ "Aylık Katma Değer Vergisi    ", $"{aylikKdv :C2}"},
 		{ "Yıllık Katma Değer Vergisi   ", $"{yillikKdv :C2}"},
 
-		{ "Aylık Ciro                   ", $"{aylikCiro :C2}"},
+		{ "Aylık Ortalama Ciro          ", $"{aylikCiro :C2}"},
 		{ "Yıllık Ciro                  ", $"{yillikCiro :C2}"},
 
-		{ "Aylık Gelir                  ", $"{aylikGelir :C2}"},
+		{ "Aylık Ortalama Gelir         ", $"{aylikGelir :C2}"},
 		{ "Yıllık Gelir                 ", $"{yillikGelir :C2}"},
 
-		{ "Aylık Gider                  ", $"{aylikGider :C2}"},
+		{ "Aylık Ortalama Gider         ", $"{aylikGider :C2}"},
 		{ "Yıllık Gider                 ", $"{yillikGider :C2}"},
 
-		{ "Aylık Ek Gelir               ", $"{aylikEkGelir :C2}"},
+		{ "Aylık Ortalama Ek Gelir      ", $"{aylikEkGelir :C2}"},
 		{ "Yıllık Ek Gelir              ", $"{yillikEkGelir :C2}"},
 
-		{ "Aylık Ek Gider               ", $"{aylikEkGider :C2}"},
+		{ "Aylık Ortalama Ek Gider      ", $"{aylikEkGider :C2}"},
 		{ "Yıllık Ek Gider              ", $"{yillikEkGider :C2}"},
 
-		{ "Aylık Toplam Gelir           ", $"{aylikToplamGelir :C2}"},
+		{ "Aylık Ortalama Toplam Gelir  ", $"{aylikToplamGelir :C2}"},
 		{ "Yıllık Toplam Gelir          ", $"{yillikToplamGelir :C2}"},
 
-		{ "Aylık Toplam Gider           ", $"{aylikToplamGider :C2}"},
+		{ "Aylık Ortalama Toplam Gider  ", $"{aylikToplamGider :C2}"},
 		{ "Yıllık Toplam Gider          ", $"{yillikToplamGider :C2}"},
 
-		{ "Aylık Net Gelir              ", $"{aylikNetGelir :C2}"},
+		{ "Aylık Ortalama Net Gelir     ", $"{aylikNetGelir :C2}"},
 		{ "Yıllık Net Gelir             ", $"{yillikNetGelir :C2}"},
 
 		{ "Gelir Verigisi Oranı         ", $"%{gelirVergiOranı*100}"},
 		{ "İstisnai Gelir               ", $"{istisnaiGelir :C2}"},
 
-		{ "Aylık Gelir Vergisi          ", $"{aylikGelirVergisi :C2}"},
+		{ "Aylık Ortalama Gelir Vergisi ", $"{aylikGelirVergisi :C2}"},
 		{ "Yıllık Gelir Vergisi         ", $"{yillikGelirVergisi :C2}"},
 
-		{ "Aylık Net Ücret              ", $"{aylikNetUcret :C2}"},
+		{ "Aylık Ortalama Net Ücret     ", $"{aylikNetUcret :C2}"},
 		{ "Yıllık Net Ücret             ", $"{yillikNetUcret :C2}"},
 
 	};
