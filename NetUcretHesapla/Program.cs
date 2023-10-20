@@ -57,7 +57,7 @@ while (Console.ReadLine() == "E" || Console.ReadLine() == "e");
 
 static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, double aylikGider, double yillikEkGelir, double yillikEkGider, bool gercekKisiMi, bool gencGirisimciMi)
 {
-	double istisnaiGelir = gencGirisimciMi ? 75000 : 0;
+	double istisnaiGelir = gencGirisimciMi ? 150000 : 0;
 	double gelirVergiOranı = gercekKisiMi ? 0 : 0.25;
 	double yillikFaturaTutari = aylikFaturaTutari * 12;
 
