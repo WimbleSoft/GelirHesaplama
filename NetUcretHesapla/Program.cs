@@ -57,7 +57,7 @@ while (Console.ReadLine() == "E" || Console.ReadLine() == "e");
 
 static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, double aylikGider, double yillikEkGelir, double yillikEkGider, bool gercekKisiMi, bool gencGirisimciMi)
 {
-	double istisnaiGelir = gencGirisimciMi ? 150000 : 0;
+	double istisnaiGelir = gencGirisimciMi ? 230000 : 0;
 	double gelirVergiOranı = gercekKisiMi ? 0 : 0.25;
 	double yillikFaturaTutari = aylikFaturaTutari * 12;
 
@@ -139,48 +139,49 @@ static double CalcYGV(double yıllikGelir, ref double gelirVergiOranı)
 	bool ucretGeliriMi = true;
 	double vergiMiktari = 0;
 
-	if (yıllikGelir <= 70000)
+	if (yıllikGelir <= 110000)
 	{
 		gelirVergiOranı = 0.15;
 		vergiMiktari = yıllikGelir * gelirVergiOranı;
 	}
-	else if (yıllikGelir <= 150000)
+
+	else if (yıllikGelir <= 230000)
 	{
 		gelirVergiOranı = 0.20;
-		vergiMiktari = (yıllikGelir - 70000) * gelirVergiOranı + 10500;
+		vergiMiktari = (yıllikGelir - 110000) * gelirVergiOranı + 16500;
 	}
 
-	else if (yıllikGelir <= 370000 && !ucretGeliriMi)
+	else if (yıllikGelir <= 580000 && !ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.27;
-		vergiMiktari = (yıllikGelir - 150000) * gelirVergiOranı + 26500;
+		vergiMiktari = (yıllikGelir - 230000) * gelirVergiOranı + 40500;
 	}
-	else if (yıllikGelir <= 550000 && ucretGeliriMi)
+	else if (yıllikGelir <= 870000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.27;
-		vergiMiktari = (yıllikGelir - 150000) * gelirVergiOranı + 26500;
+		vergiMiktari = (yıllikGelir - 230000) * gelirVergiOranı + 40500;
     }
 
-    else if (yıllikGelir <= 1900000 && !ucretGeliriMi)
+    else if (yıllikGelir <= 3000000 && !ucretGeliriMi)
     {
         gelirVergiOranı = 0.35;
-        vergiMiktari = (yıllikGelir - 550000) * gelirVergiOranı + 85900;
+        vergiMiktari = (yıllikGelir - 580000) * gelirVergiOranı + 135000;
     }
-    else if (yıllikGelir <= 1900000 && ucretGeliriMi)
+    else if (yıllikGelir <= 3000000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.35;
-		vergiMiktari = (yıllikGelir - 550000) * gelirVergiOranı + 134500;
+		vergiMiktari = (yıllikGelir - 870000) * gelirVergiOranı + 213300;
 	}
 
-	else if (yıllikGelir > 1900000 && !ucretGeliriMi)
+	else if (yıllikGelir > 3000000 && !ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.40;
-		vergiMiktari = (yıllikGelir - 1900000) * gelirVergiOranı + 621400;
+		vergiMiktari = (yıllikGelir - 3000000) * gelirVergiOranı + 982000;
 	}
-	else if (yıllikGelir > 1900000 && ucretGeliriMi)
+	else if (yıllikGelir > 3000000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.40;
-		vergiMiktari = (yıllikGelir - 1900000) * gelirVergiOranı + 607000;
+		vergiMiktari = (yıllikGelir - 3000000) * gelirVergiOranı + 958800;
 	}
 	else
 	{
