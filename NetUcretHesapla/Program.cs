@@ -52,16 +52,16 @@
 	Console.WriteLine();
 	Console.WriteLine("Tekrar girmek ister misiniz? (E/H):");
 }
-while (Console.ReadLine() == "E");
+while (Console.ReadLine() == "E" || Console.ReadLine() == "e");
 
 
 static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, double aylikGider, double yillikEkGelir, double yillikEkGider, bool gercekKisiMi, bool gencGirisimciMi)
 {
-	double istisnaiGelir = gencGirisimciMi ? 75000 : 0;
+	double istisnaiGelir = gencGirisimciMi ? 230000 : 0;
 	double gelirVergiOranı = gercekKisiMi ? 0 : 0.25;
 	double yillikFaturaTutari = aylikFaturaTutari * 12;
 
-	double aylikKdv = aylikFaturaTutari * 0.18;
+	double aylikKdv = aylikFaturaTutari * 0.20;
 	double yillikKdv = aylikKdv * 12;
 
 	double aylikCiro = aylikFaturaTutari + aylikKdv;
@@ -92,43 +92,43 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 
 	return new Dictionary<string, string>
 	{
-		{ "Aylık Fatura Tutarı          ", $"{aylikFaturaTutari :C2}"},
+		{ "Aylık Ortalama Fatura Tutarı ", $"{aylikFaturaTutari :C2}"},
 		{ "Yıllık Fatura Tutarı         ", $"{yillikFaturaTutari :C2}"},
 
 		{ "Aylık Katma Değer Vergisi    ", $"{aylikKdv :C2}"},
 		{ "Yıllık Katma Değer Vergisi   ", $"{yillikKdv :C2}"},
 
-		{ "Aylık Ciro                   ", $"{aylikCiro :C2}"},
+		{ "Aylık Ortalama Ciro          ", $"{aylikCiro :C2}"},
 		{ "Yıllık Ciro                  ", $"{yillikCiro :C2}"},
 
-		{ "Aylık Gelir                  ", $"{aylikGelir :C2}"},
+		{ "Aylık Ortalama Gelir         ", $"{aylikGelir :C2}"},
 		{ "Yıllık Gelir                 ", $"{yillikGelir :C2}"},
 
-		{ "Aylık Gider                  ", $"{aylikGider :C2}"},
+		{ "Aylık Ortalama Gider         ", $"{aylikGider :C2}"},
 		{ "Yıllık Gider                 ", $"{yillikGider :C2}"},
 
-		{ "Aylık Ek Gelir               ", $"{aylikEkGelir :C2}"},
+		{ "Aylık Ortalama Ek Gelir      ", $"{aylikEkGelir :C2}"},
 		{ "Yıllık Ek Gelir              ", $"{yillikEkGelir :C2}"},
 
-		{ "Aylık Ek Gider               ", $"{aylikEkGider :C2}"},
+		{ "Aylık Ortalama Ek Gider      ", $"{aylikEkGider :C2}"},
 		{ "Yıllık Ek Gider              ", $"{yillikEkGider :C2}"},
 
-		{ "Aylık Toplam Gelir           ", $"{aylikToplamGelir :C2}"},
+		{ "Aylık Ortalama Toplam Gelir  ", $"{aylikToplamGelir :C2}"},
 		{ "Yıllık Toplam Gelir          ", $"{yillikToplamGelir :C2}"},
 
-		{ "Aylık Toplam Gider           ", $"{aylikToplamGider :C2}"},
+		{ "Aylık Ortalama Toplam Gider  ", $"{aylikToplamGider :C2}"},
 		{ "Yıllık Toplam Gider          ", $"{yillikToplamGider :C2}"},
 
-		{ "Aylık Net Gelir              ", $"{aylikNetGelir :C2}"},
+		{ "Aylık Ortalama Net Gelir     ", $"{aylikNetGelir :C2}"},
 		{ "Yıllık Net Gelir             ", $"{yillikNetGelir :C2}"},
 
 		{ "Gelir Verigisi Oranı         ", $"%{gelirVergiOranı*100}"},
 		{ "İstisnai Gelir               ", $"{istisnaiGelir :C2}"},
 
-		{ "Aylık Gelir Vergisi          ", $"{aylikGelirVergisi :C2}"},
+		{ "Aylık Ortalama Gelir Vergisi ", $"{aylikGelirVergisi :C2}"},
 		{ "Yıllık Gelir Vergisi         ", $"{yillikGelirVergisi :C2}"},
 
-		{ "Aylık Net Ücret              ", $"{aylikNetUcret :C2}"},
+		{ "Aylık Ortalama Net Ücret     ", $"{aylikNetUcret :C2}"},
 		{ "Yıllık Net Ücret             ", $"{yillikNetUcret :C2}"},
 
 	};
@@ -139,50 +139,54 @@ static double CalcYGV(double yıllikGelir, ref double gelirVergiOranı)
 	bool ucretGeliriMi = true;
 	double vergiMiktari = 0;
 
-	if (yıllikGelir <= 32000)
+	if (yıllikGelir <= 110000)
 	{
 		gelirVergiOranı = 0.15;
 		vergiMiktari = yıllikGelir * gelirVergiOranı;
 	}
-	else if (yıllikGelir <= 70000)
+
+	else if (yıllikGelir <= 230000)
 	{
 		gelirVergiOranı = 0.20;
-		vergiMiktari = (yıllikGelir - 32000) * gelirVergiOranı + 4800;
+		vergiMiktari = (yıllikGelir - 110000) * gelirVergiOranı + 16500;
 	}
-	else if (yıllikGelir <= 170000 && !ucretGeliriMi)
+
+	else if (yıllikGelir <= 580000 && !ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.27;
-		vergiMiktari = (yıllikGelir - 70000) * gelirVergiOranı + 12400;
+		vergiMiktari = (yıllikGelir - 230000) * gelirVergiOranı + 40500;
 	}
-	else if (yıllikGelir <= 250000 && ucretGeliriMi)
+	else if (yıllikGelir <= 870000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.27;
-		vergiMiktari = (yıllikGelir - 70000) * gelirVergiOranı + 12400;
-	}
-	else if (yıllikGelir <= 250000 && ucretGeliriMi)
-	{
-		gelirVergiOranı = 0.27;
-		vergiMiktari = (yıllikGelir - 70000) * gelirVergiOranı + 12400;
-	}
-	else if (yıllikGelir <= 880000 && !ucretGeliriMi)
+		vergiMiktari = (yıllikGelir - 230000) * gelirVergiOranı + 40500;
+    }
+
+    else if (yıllikGelir <= 3000000 && !ucretGeliriMi)
+    {
+        gelirVergiOranı = 0.35;
+        vergiMiktari = (yıllikGelir - 580000) * gelirVergiOranı + 135000;
+    }
+    else if (yıllikGelir <= 3000000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.35;
-		vergiMiktari = (yıllikGelir - 170000) * gelirVergiOranı + 39400;
+		vergiMiktari = (yıllikGelir - 870000) * gelirVergiOranı + 213300;
 	}
-	else if (yıllikGelir <= 880000 && ucretGeliriMi)
-	{
-		gelirVergiOranı = 0.35;
-		vergiMiktari = (yıllikGelir - 250000) * gelirVergiOranı + 61000;
-	}
-	else if (yıllikGelir > 880000 && !ucretGeliriMi)
+
+	else if (yıllikGelir > 3000000 && !ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.40;
-		vergiMiktari = (yıllikGelir - 880000) * gelirVergiOranı + 287900;
+		vergiMiktari = (yıllikGelir - 3000000) * gelirVergiOranı + 982000;
 	}
-	else if (yıllikGelir > 880000 && ucretGeliriMi)
+	else if (yıllikGelir > 3000000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.40;
-		vergiMiktari = (yıllikGelir - 880000) * gelirVergiOranı + 281500;
+		vergiMiktari = (yıllikGelir - 3000000) * gelirVergiOranı + 958800;
+	}
+	else
+	{
+		gelirVergiOranı = 0;
+        vergiMiktari = -1;
 	}
 
 	return vergiMiktari;
