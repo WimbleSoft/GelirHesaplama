@@ -3,7 +3,9 @@
 	double aylikFaturaTutari, aylikGider, yillikEkGelir, yillikEkGider;
 	bool gercekKisiMi = false;
 	bool gencGirisimciMi = false;
-	string? gercekKisi = string.Empty;
+	bool ucretGeliriMi = false;
+    string? gercekKisi = string.Empty;
+    string? ucretGeliri = string.Empty;
 	string? gencGirisimci = string.Empty;
 
 	Console.Clear();
@@ -19,15 +21,25 @@
     yillikEkGider = Convert.ToDouble(Console.ReadLine());
     while (true)
 	{
-		Console.Write("Gerçek Kişi Firması mı? (E/H):");
-		gercekKisi = Console.ReadLine();
-		if (gercekKisi == "E" || gercekKisi == "H" || gercekKisi == "e" || gercekKisi == "h")
+		Console.Write("Ücret geliri mi? (E/H):");
+        ucretGeliri = Console.ReadLine();
+		if (ucretGeliri == "E" || ucretGeliri == "H" || ucretGeliri == "e" || ucretGeliri == "h")
 			break;
 		else
 			Console.WriteLine("Yanlış seçim yaptınız.");
 	}
-	gercekKisiMi = gercekKisi == "E" || gercekKisi == "e";
-	while (gercekKisiMi)
+    ucretGeliriMi = ucretGeliri == "E" || ucretGeliri == "e";
+    while (true)
+    {
+        Console.Write("Gerçek Kişi Firması mı? (E/H):");
+        gercekKisi = Console.ReadLine();
+        if (gercekKisi == "E" || gercekKisi == "H" || gercekKisi == "e" || gercekKisi == "h")
+            break;
+        else
+            Console.WriteLine("Yanlış seçim yaptınız.");
+    }
+    gercekKisiMi = gercekKisi == "E" || gercekKisi == "e";
+    while (gercekKisiMi)
 	{
 		Console.Write("Genç Girişimci mi? (E/H):");
 		gencGirisimci = Console.ReadLine();
@@ -38,7 +50,7 @@
 	}
 	gencGirisimciMi = gencGirisimci == "E" || gercekKisi == "e";
 	
-	Dictionary<string, string> hesaplar = NetUcretHesapla(aylikFaturaTutari, aylikGider, yillikEkGelir, yillikEkGider, gercekKisiMi, gencGirisimciMi);
+	Dictionary<string, string> hesaplar = NetUcretHesapla(aylikFaturaTutari, aylikGider, yillikEkGelir, yillikEkGider, gercekKisiMi, gencGirisimciMi, ucretGeliriMi);
 
 	int i = 0;
 	hesaplar.ToList().ForEach(x =>
@@ -55,9 +67,9 @@
 while (Console.ReadLine() == "E" || Console.ReadLine() == "e");
 
 
-static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, double aylikGider, double yillikEkGelir, double yillikEkGider, bool gercekKisiMi, bool gencGirisimciMi)
+static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, double aylikGider, double yillikEkGelir, double yillikEkGider, bool gercekKisiMi, bool gencGirisimciMi, bool ucretGeliriMi)
 {
-	double istisnaiGelir = gencGirisimciMi ? 230000 : 0;
+	double istisnaiGelir = gencGirisimciMi ? 330000 : 0;
 	double gelirVergiOranı = gercekKisiMi ? 0 : 0.25;
 	double yillikFaturaTutari = aylikFaturaTutari * 12;
 
@@ -84,7 +96,7 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 	double aylikNetGelir = aylikToplamGelir - aylikToplamGider;
 	double yillikNetGelir = yillikToplamGelir - yillikToplamGider;
 
-	double yillikGelirVergisi = gercekKisiMi ? CalcYGV(yillikNetGelir - istisnaiGelir, ref gelirVergiOranı) : (yillikNetGelir) * 0.25;
+	double yillikGelirVergisi = gercekKisiMi ? CalcYGV(yillikNetGelir - istisnaiGelir, ref gelirVergiOranı, ucretGeliriMi) : (yillikNetGelir) * 0.25;
 	double aylikGelirVergisi = yillikGelirVergisi / 12;
 
 	double yillikNetUcret = yillikNetGelir - yillikGelirVergisi;
@@ -134,54 +146,53 @@ static Dictionary<string, string> NetUcretHesapla(double aylikFaturaTutari, doub
 	};
 }
 
-static double CalcYGV(double yıllikGelir, ref double gelirVergiOranı)
+static double CalcYGV(double yıllikGelir, ref double gelirVergiOranı, bool ucretGeliriMi)
 {
-	bool ucretGeliriMi = true;
 	double vergiMiktari = 0;
 
-	if (yıllikGelir <= 110000)
+	if (yıllikGelir <= 158000)
 	{
 		gelirVergiOranı = 0.15;
 		vergiMiktari = yıllikGelir * gelirVergiOranı;
 	}
 
-	else if (yıllikGelir <= 230000)
+	else if (yıllikGelir <= 330000)
 	{
 		gelirVergiOranı = 0.20;
-		vergiMiktari = (yıllikGelir - 110000) * gelirVergiOranı + 16500;
+		vergiMiktari = (yıllikGelir - 158000) * gelirVergiOranı + 23700;
 	}
 
-	else if (yıllikGelir <= 580000 && !ucretGeliriMi)
+	else if (yıllikGelir <= 800000 && !ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.27;
-		vergiMiktari = (yıllikGelir - 230000) * gelirVergiOranı + 40500;
+		vergiMiktari = (yıllikGelir - 330000) * gelirVergiOranı + 58100;
 	}
-	else if (yıllikGelir <= 870000 && ucretGeliriMi)
+	else if (yıllikGelir <= 1200000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.27;
-		vergiMiktari = (yıllikGelir - 230000) * gelirVergiOranı + 40500;
+		vergiMiktari = (yıllikGelir - 330000) * gelirVergiOranı + 58100;
     }
 
-    else if (yıllikGelir <= 3000000 && !ucretGeliriMi)
+    else if (yıllikGelir <= 4300000 && !ucretGeliriMi)
     {
         gelirVergiOranı = 0.35;
-        vergiMiktari = (yıllikGelir - 580000) * gelirVergiOranı + 135000;
+        vergiMiktari = (yıllikGelir - 800000) * gelirVergiOranı + 185000;
     }
-    else if (yıllikGelir <= 3000000 && ucretGeliriMi)
+    else if (yıllikGelir <= 4300000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.35;
-		vergiMiktari = (yıllikGelir - 870000) * gelirVergiOranı + 213300;
+		vergiMiktari = (yıllikGelir - 1200000) * gelirVergiOranı + 293000;
 	}
 
-	else if (yıllikGelir > 3000000 && !ucretGeliriMi)
+	else if (yıllikGelir > 4300000 && !ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.40;
-		vergiMiktari = (yıllikGelir - 3000000) * gelirVergiOranı + 982000;
+		vergiMiktari = (yıllikGelir - 4300000) * gelirVergiOranı + 1410000;
 	}
-	else if (yıllikGelir > 3000000 && ucretGeliriMi)
+	else if (yıllikGelir > 4300000 && ucretGeliriMi)
 	{
 		gelirVergiOranı = 0.40;
-		vergiMiktari = (yıllikGelir - 3000000) * gelirVergiOranı + 958800;
+		vergiMiktari = (yıllikGelir - 4300000) * gelirVergiOranı + 1378000;
 	}
 	else
 	{
